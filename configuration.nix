@@ -80,6 +80,25 @@
   # Configure console keymap
   console.keyMap = "us-acentos";
 
+  fonts = {
+    enableDefaultPackages = true;
+    fontconfig.enable = true;
+
+    packages = with pkgs; [
+      font-awesome
+      inconsolata
+      jetbrains-mono
+      source-code-pro
+    ];
+
+    # Optional but nice: default monospace fonts
+    fontconfig.defaultFonts.monospace = [
+      "JetBrains Mono"
+      "Source Code Pro"
+      "Inconsolata"
+    ];
+  };
+
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
@@ -120,27 +139,33 @@
   programs.firefox.enable = true;
   programs.zsh.enable = true;
 
+  programs.npm.enable = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+
     arandr
     bat
     brave
     discord
     docker
     docker-compose
+    dunst
     emacs
     feh
     ferdium
+    firefox-devedition
     flameshot
     font-awesome
     git
     gnumake
     inconsolata
     jetbrains-mono
+    libnotify
     mise
     obs-studio
     opencode
