@@ -126,37 +126,42 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    emacs
-    vim
-    terminator
-    git
-    tealdeer
-    xclip
+    arandr
     bat
-    gnumake
-
-    mise
+    brave
+    discord
     docker
     docker-compose
-    xmodmap
+    emacs
+    feh
+    ferdium
+    flameshot
     font-awesome
+    git
+    gnumake
     inconsolata
     jetbrains-mono
-    source-code-pro
-    rofi
-    arandr
+    mise
+    obs-studio
+    opencode
     pandoc
+    pavucontrol
     ripgrep
+    rofi
     silver-searcher
-
-    telegram-desktop
-    ferdium
     slack
-    discord
+    source-code-pro
+    tealdeer
+    telegram-desktop
+    terminator
+    vim
+    xclip
+    xmodmap
+    zoom-us
 
     # Kalkomey
-    # awscli2
-    # aws-vault
+    awscli2
+    vault
     # openvpn
 
     config.hardware.nvidia.package
