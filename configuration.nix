@@ -1,3 +1,5 @@
+# sudo nixos-rebuild switch --impure --flake  "/home/fedex/nixos-flakes-azula#azula"
+
 { config, pkgs, ... }:
 
 {
@@ -35,14 +37,16 @@
     LC_TIME = "es_AR.UTF-8";
   };
 
-  # Enable the X11 windowing system.
   services.xserver.enable = true;
-
-  # Enable the Cinnamon Desktop Environment.
   services.xserver.displayManager.lightdm.enable = true;
   services.xserver.desktopManager.cinnamon.enable = true;
 
-  # Configure keymap in X11
+  # services.xserver = {
+  #   enable = true;
+  #   displayManager.lightdm.enable = true; # or greetd, sddm, etc.
+  #   windowManager.i3.enable = true;
+  # };
+
   services.xserver.xkb = {
     layout = "us";
     variant = "intl";
@@ -78,8 +82,9 @@
     isNormalUser = true;
     description = "Federico Martín Iachetti";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
     packages = with pkgs; [
-    #  thunderbird
+      #  thunderbird
     ];
   };
 
@@ -87,8 +92,8 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "fedex";
 
-  # Install firefox.
   programs.firefox.enable = true;
+  programs.zsh.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -103,6 +108,16 @@
     tealdeer
     xclip
     bat
+
+    mise
+    docker
+    docker-compose
+    xmodmap
+    jetbrains-mono
+
+    # Kalkomey
+    # vault
+    # openvpn
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
