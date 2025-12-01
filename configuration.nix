@@ -174,6 +174,7 @@
     opencode
     pandoc
     pavucontrol
+    qalculate-gtk
     ripgrep
     rofi
     silver-searcher
