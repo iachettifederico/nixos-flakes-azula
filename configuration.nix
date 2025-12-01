@@ -148,6 +148,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
+    _1password-cli
+    _1password-gui
     arandr
     bat
     brave
