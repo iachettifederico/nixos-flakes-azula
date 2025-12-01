@@ -183,6 +183,7 @@
     tealdeer
     telegram-desktop
     terminator
+    tilda
     vim
     xclip
     xmodmap
