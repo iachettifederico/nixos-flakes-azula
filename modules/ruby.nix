@@ -5,17 +5,24 @@
     mise
     git
 
-    # build deps for compiling Ruby via mise
-    openssl
-    zlib
-    readline
-    libyaml
+    # build deps for compiling Ruby via mise and native gems
     autoconf
     bison
+    gcc
+    gnumake
+    libyaml
+    openssl
     pkg-config
+    readline
+    zlib
   ];
 
-  environment.variables.MISE_DATA_DIR = "/home/fedex/.local/share/mise";
+  environment.variables = {
+    MISE_DATA_DIR = "/home/fedex/.local/share/mise";
+
+    # Tell Ruby / mkmf which compiler to use
+    CC = "${pkgs.gcc}/bin/gcc";
+  };
 
   environment.interactiveShellInit = ''
     if [ -x "${pkgs.mise}/bin/mise" ]; then
@@ -26,13 +33,13 @@
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
-      stdenv.cc.cc  # glibc, libstdc++, etc
-      zlib
-      openssl
-      libyaml
-      readline
       gmp
       libxcrypt
+      libyaml
+      openssl
+      readline
+      stdenv.cc.cc  # glibc, libstdc++, etc.
+      zlib
     ];
   };
 }
