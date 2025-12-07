@@ -176,7 +176,6 @@
     jetbrains-mono
     libnotify
     mc
-    mise
     nemo
     obs-studio
     opencode
