@@ -151,7 +151,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
-    _1password-cli
     _1password-gui
     arandr
     audacity
@@ -170,6 +169,7 @@
     flameshot
     font-awesome
     git
+    github-cli
     gnumake
     godot
     inconsolata
@@ -191,12 +191,14 @@
     telegram-desktop
     terminator
     tilda
+    tree
     vim
     vlc
     xclip
     xhost
     xmodmap
     zoom-us
+    _1password-cli
 
     # Kalkomey
     awscli2

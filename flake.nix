@@ -54,7 +54,6 @@
           export GEM_PATH="$GEM_HOME"
           export PATH="$GEM_HOME/bin:$PATH"
 
-          # Create the gem directory if it doesn't exist
           mkdir -p "$GEM_HOME"
         '';
         }
