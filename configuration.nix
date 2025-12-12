@@ -151,6 +151,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
+    _1password-cli
     _1password-gui
     arandr
     audacity
@@ -194,11 +195,11 @@
     tree
     vim
     vlc
+    watchman
     xclip
     xhost
     xmodmap
     zoom-us
-    _1password-cli
 
     # Kalkomey
     awscli2
