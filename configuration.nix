@@ -152,8 +152,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
 
-    _1password-cli
-    _1password-gui
     arandr
     audacity
     bat
@@ -244,6 +242,29 @@
 
   hardware.opengl = {
     enable = true;
+  };
+
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true;
+    openFirewall = true;
+  };
+
+  # Enable the unfree 1Password packages
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (pkgs.lib.getName pkg) [
+    "1password-gui"
+    "1password"
+  ];
+  # Alternatively, you could also just allow all unfree packages
+  # nixpkgs.config.allowUnfree = true;
+
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    # Certain features, including CLI integration and system authentication support,
+    # require enabling PolKit integration on some desktop environments (e.g. Plasma).
+    polkitPolicyOwners = [ "fedex" ];
   };
 
   # Some programs need SUID wrappers, can be configured further or are
