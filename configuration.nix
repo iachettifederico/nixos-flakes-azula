@@ -170,6 +170,7 @@
     font-awesome
     git
     github-cli
+    gnome-calculator
     gnumake
     godot
     inconsolata
@@ -181,7 +182,6 @@
     opencode
     pandoc
     pavucontrol
-    qalculate-gtk
     ripgrep
     rofi
     silver-searcher
@@ -202,9 +202,9 @@
 
     # Kalkomey
     awscli2
-    vault
-    teams-for-linux
     openvpn
+    teams-for-linux
+    vault
 
     config.hardware.nvidia.package
   ];
