@@ -175,6 +175,7 @@
     godot
     inconsolata
     jetbrains-mono
+    ledger
     libnotify
     mc
     nemo
