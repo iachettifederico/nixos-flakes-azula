@@ -153,3 +153,29 @@ Disable NVIDIA entirely, use Intel for everything.
 - Do NOT touch azula directory (other PC)
 - User is accessing via SSH
 - Some graphical tools may not work remotely
+
+## SOLUTION APPLIED
+
+**Date: 2025-12-29**
+
+**Implemented: Option 2 - NVIDIA PRIME Sync Mode**
+
+Added NVIDIA PRIME configuration to `configuration.nix`:
+```nix
+hardware.nvidia.prime = {
+  sync.enable = true;
+  intelBusId = "PCI:0:2:0";
+  nvidiaBusId = "PCI:1:0:0";
+};
+```
+
+This configuration:
+- ✅ Uses NVIDIA RTX 2050 for ALL rendering (full GPU power)
+- ✅ Outputs through Intel GPU to the display (where it's physically connected)
+- ✅ Both i3 and Cinnamon will work
+- ✅ Full hardware acceleration
+
+**Next Steps:**
+1. Rebuild NixOS: `sudo nixos-rebuild switch --impure --flake "/home/fedex/nixos-flakes/toph#toph"`
+2. Reboot
+3. Display should work at proper resolution with full NVIDIA rendering

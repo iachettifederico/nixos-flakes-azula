@@ -68,6 +68,18 @@
     modesetting.enable = true;
     powerManagement.enable = false;
     nvidiaSettings = true;      # gives you the nvidia-settings GUI
+    
+    # PRIME configuration for hybrid graphics (NVIDIA + Intel)
+    # Sync mode: NVIDIA renders, Intel outputs to display
+    prime = {
+      sync.enable = true;
+      
+      # Bus IDs found via: lspci | grep -E "VGA|3D"
+      # Intel: 00:02.0 - integrated GPU (has the display connected)
+      # NVIDIA: 01:00.0 - discrete GPU (RTX 2050)
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
   # Pin to driver 570.133.07 (this exact snippet is confirmed working on NixOS 25.05 + linux 6.14.8).
