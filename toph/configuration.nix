@@ -1,4 +1,4 @@
-# sudo nixos-rebuild switch --impure --flake  "/home/fedex/nixos-flakes-toph#toph"
+# sudo nixos-rebuild switch --impure --flake  "/home/fedex/nixos-flakes/toph#toph"
 
 { config, pkgs, emacs-with-grammars, ... }:
 
@@ -37,12 +37,16 @@
 
   # services.xserver.enable = true;
   # services.xserver.displayManager.lightdm.enable = true;
-  # services.xserver.desktopManager.cinnamon.enable = true;
+  #services.xserver.desktopManager.cinnamon.enable = true;
 
   services.xserver = {
     enable = true;
-    displayManager.lightdm.enable = true; # or greetd, sddm, etc.
+    displayManager = {
+      lightdm.enable = true;
+      defaultSession = "cinnamon";
+    };
     windowManager.i3.enable = true;
+    desktopManager.cinnamon.enable = true;
   };
 
   services.xserver.xkb = {
@@ -64,18 +68,30 @@
     modesetting.enable = true;
     powerManagement.enable = false;
     nvidiaSettings = true;      # gives you the nvidia-settings GUI
+
+    # PRIME configuration for hybrid graphics (NVIDIA + Intel)
+    # Sync mode: NVIDIA renders, Intel outputs to display
+    prime = {
+      sync.enable = true;
+
+      # Bus IDs found via: lspci | grep -E "VGA|3D"
+      # Intel: 00:02.0 - integrated GPU (has the display connected)
+      # NVIDIA: 01:00.0 - discrete GPU (RTX 2050)
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
   };
 
   # Pin to driver 570.133.07 (this exact snippet is confirmed working on NixOS 25.05 + linux 6.14.8).
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
-    version = "570.133.07";
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+  #   version = "570.133.07";
 
-    sha256_64bit   = "sha256-LUPmTFgb5e9VTemIixqpADfvbUX1QoTT2dztwI3E3CY=";
-    openSha256     = "sha256-9l8N83Spj0MccA8+8R1uqiXBS0Ag4JrLPjrU3TaXHnM=";
-    settingsSha256 = "sha256-XMk+FvTlGpMquM8aE8kgYK2PIEszUZD2+Zmj2OpYrzU=";
+  #   sha256_64bit   = "sha256-LUPmTFgb5e9VTemIixqpADfvbUX1QoTT2dztwI3E3CY=";
+  #   openSha256     = "sha256-9l8N83Spj0MccA8+8R1uqiXBS0Ag4JrLPjrU3TaXHnM=";
+  #   settingsSha256 = "sha256-XMk+FvTlGpMquM8aE8kgYK2PIEszUZD2+Zmj2OpYrzU=";
 
-    usePersistenced = false;
-  };
+  #   usePersistenced = false;
+  # };
 
   # Configure console keymap
   console.keyMap = "us-acentos";
@@ -126,6 +142,10 @@
     gid = 1000;
   };
 
+  users.groups.sofi = {
+    gid = 1001;
+  };
+
   users.users.fedex = {
     isNormalUser = true;
     description = "Federico Martín Iachetti";
@@ -136,9 +156,19 @@
     packages = with pkgs; [];
   };
 
+  users.users.sofi = {
+    isNormalUser = true;
+    description = "Sofi";
+    uid = 1001;
+    group = "sofi";  # primary group
+    extraGroups = [ "users" "networkmanager" "wheel" ];
+    shell = pkgs.zsh;
+    packages = with pkgs; [];
+  };
+
   # Enable automatic login for the user.
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "fedex";
+  # services.displayManager.autoLogin.enable = true;
+  # services.displayManager.autoLogin.user = "fedex";
 
   programs.firefox.enable = true;
   programs.zsh.enable = true;
@@ -270,14 +300,6 @@
     polkitPolicyOwners = [ "fedex" ];
   };
 
-  virtualisation.virtualbox = {
-    host = {
-      enable = true;
-      enableExtensionPack = true;
-      addNetworkInterface = false; # <- prevents vboxnet0.service
-    };
-  };
-
   users.extraGroups.vboxusers.members = [ "fedex" ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -291,7 +313,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
