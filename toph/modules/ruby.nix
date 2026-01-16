@@ -11,13 +11,13 @@
   environment.systemPackages = with pkgs; [
     bundix
     direnv
-    ruby-packages."ruby-3"  # Latest Ruby 3.x as system default
+    ruby-packages."ruby-4"  # Latest Ruby 4.x as system default
   ];
 
   # Configure zsh to add gem bin directory to PATH
   programs.zsh.interactiveShellInit = ''
     # Add Ruby gem binaries to PATH for system-installed gems
-    export GEM_HOME="$HOME/.local/share/gem/ruby/3.4.0"
+    export GEM_HOME="$HOME/.local/share/gem/ruby/4.0.0"
     export PATH="$GEM_HOME/bin:$PATH"
   '';
 

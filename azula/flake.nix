@@ -58,7 +58,7 @@
 
       # Expose Ruby packages for direnv
       packages.${system} = nixpkgs-ruby.packages.${system} // {
-        default = nixpkgs-ruby.packages.${system}."ruby-3";
+        default = nixpkgs-ruby.packages.${system}."ruby-4";
       };
 
       # Expose devShells for each Ruby version

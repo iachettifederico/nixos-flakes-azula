@@ -157,11 +157,13 @@
     bat
     brave
     davinci-resolve
+    difftastic
     discord
     docker
     docker-compose
     dunst
     emacs-with-grammars
+    evince
     feh
     ferdium
     ffmpeg
@@ -174,6 +176,10 @@
     gnome-calculator
     gnumake
     godot
+    hledger
+    hledger-interest
+    hledger-ui
+    hledger-web
     inconsolata
     jetbrains-mono
     ledger
@@ -181,6 +187,7 @@
     mc
     nemo
     obs-studio
+    ollama-cuda
     opencode
     pandoc
     pavucontrol
@@ -279,6 +286,26 @@
   };
 
   users.extraGroups.vboxusers.members = [ "fedex" ];
+
+  services.ollama = {
+    enable = true;
+
+    # user = "fedex";
+    # group = "users";
+
+    # Key change: select the CUDA build
+    package = pkgs.ollama-cuda;
+
+    # Keep it local (good default for OpenCode on the same machine)
+    host = "127.0.0.1";
+    port = 11434;
+
+    # Optional but useful knobs:
+    openFirewall = false; # default is typically false
+    models = "/var/lib/ollama/models"; # if you want to control where models live
+    # loadModels = [ "qwen2.5-coder:7b" "deepseek-r1:7b" ]; # pre-pull at startup
+    # environmentVariables = { OLLAMA_KEEP_ALIVE = "10m"; };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
