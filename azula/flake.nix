@@ -7,13 +7,17 @@
       url = "github:bobvanderlinden/nixpkgs-ruby";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    opencode-flake = {
+      url = "github:aodhanhayter/opencode-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-ruby, emacs-overlay }:
+  outputs = { self, nixpkgs, opencode-flake, nixpkgs-ruby, emacs-overlay }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -53,6 +57,13 @@
           ./configuration.nix
           ./modules/ruby.nix
           ./modules/npm.nix
+
+          # Install OpenCode from the upstream-tracking flake.
+          ({ ... }: {
+            environment.systemPackages = [
+              opencode-flake.packages.${system}.default
+            ];
+          })
         ];
       };
 

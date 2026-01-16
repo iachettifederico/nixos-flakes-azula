@@ -188,7 +188,6 @@
     nemo
     obs-studio
     ollama-cuda
-    opencode
     pandoc
     pavucontrol
     ripgrep
